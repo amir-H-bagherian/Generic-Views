@@ -3,9 +3,10 @@ from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import RedirectView, TemplateView, ListView
-from django.views.generic import DetailView
+from django.views.generic import DetailView, FormView
 from .models import Student
-
+from .forms import ContactForm
+from django.urls import reverse_lazy
 
 class HomeView(ListView):
     template_name = 'home/home.html'
@@ -25,3 +26,8 @@ class DetailStudentView(DetailView):
 
     def get_queryset(self) -> QuerySet[Any]:
         return Student.objects.filter(age__gt=30)
+    
+class ContactView(FormView):
+    template_name = 'home/contact.html'
+    form_class = ContactForm
+    success_url = reverse_lazy('home')
