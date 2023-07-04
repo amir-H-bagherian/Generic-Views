@@ -1,10 +1,11 @@
 from typing import Any, Dict, Optional
 from django.db.models.query import QuerySet
+from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import RedirectView, TemplateView, ListView
-from django.views.generic import DetailView, FormView
+from django.views.generic import DetailView, FormView, CreateView
 from .models import Student, Comment
 from .forms import ContactForm
 from django.urls import reverse_lazy
@@ -28,15 +29,13 @@ class DetailStudentView(DetailView):
     def get_queryset(self) -> QuerySet[Any]:
         return Student.objects.filter(age__gt=30)
     
-class ContactView(FormView):
-    template_name = 'home/contact.html'
-    form_class = ContactForm
+class CreateStudentView(CreateView):
+    model = Student
+    fields = '__all__'
+    template_name = 'home/create.html'
     success_url = reverse_lazy('home')
     
-    def form_valid(self, form: Any) -> HttpResponse:
-        self._create_comment(form.cleaned_data)
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        if form.cleaned_data['age'] < 10:
+            raise ValueError("Not a valid age")
         return super().form_valid(form)
-    
-    def _create_comment(self, data:dict):
-        data['body'] = data.pop('content')
-        Comment.objects.create(**data)
