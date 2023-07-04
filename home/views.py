@@ -1,10 +1,11 @@
 from typing import Any, Dict, Optional
 from django.db.models.query import QuerySet
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import RedirectView, TemplateView, ListView
 from django.views.generic import DetailView, FormView
-from .models import Student
+from .models import Student, Comment
 from .forms import ContactForm
 from django.urls import reverse_lazy
 
@@ -31,3 +32,11 @@ class ContactView(FormView):
     template_name = 'home/contact.html'
     form_class = ContactForm
     success_url = reverse_lazy('home')
+    
+    def form_valid(self, form: Any) -> HttpResponse:
+        self._create_comment(form.cleaned_data)
+        return super().form_valid(form)
+    
+    def _create_comment(self, data:dict):
+        data['body'] = data.pop('content')
+        Comment.objects.create(**data)

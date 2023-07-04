@@ -16,3 +16,13 @@ class Student(models.Model):
     def get_absolute_url(self):
         return reverse_lazy("detail", kwargs={"my_slug": self.first_name})
     
+    
+class Comment(models.Model):
+    title = models.CharField(max_length=100)
+    body = models.CharField(max_length=800)
+    
+    class Meta:
+        verbose_name_plural = 'comments'
+        
+    def __str__(self) -> str:
+        return self.title
