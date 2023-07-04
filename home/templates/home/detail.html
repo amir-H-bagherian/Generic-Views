@@ -10,5 +10,6 @@
     <p>{{student.last_name}}</p>
     <p>{{student.age}}</p>
     <button><a href="{% url 'update' student.id %}">Update</a></button>
+    <button><a href="{% url 'delete' student.id %}">Delete</a></button>
 </body>
 </html>
