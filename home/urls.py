@@ -1,7 +1,6 @@
 from django.urls import path
-from .views import HomeView, FisrtView
+from .views import HomeView
 
 urlpatterns = [
-    path('a/<str:name>/<int:age>/', HomeView.as_view(), name='home'),
-    path('first/<str:name>/<int:age>/', FisrtView.as_view(), name='first'),
+    path('', HomeView.as_view(), name='home'),
 ]
