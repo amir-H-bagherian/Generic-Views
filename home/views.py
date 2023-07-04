@@ -1,7 +1,15 @@
 from django.shortcuts import render
 from django.views import View
+from django.views.generic import TemplateView
 
-# Create your views here.
-class HomeView(View):
-    def get(self, request):
-        return render(request, 'home/home.html')
+from .models import Student
+
+
+class HomeView(TemplateView):
+    template_name = 'home/home.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["student"] = Student.objects.all()
+        return context
+    
