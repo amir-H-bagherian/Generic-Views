@@ -6,8 +6,8 @@
     <title>Document</title>
 </head>
 <body>
-    {% for st in student %}
-    <a href="{{ st.get_absolute_url }}">{{st}}</a>
-    {% endfor %}
+    <p>{{student.first_name}}</p>
+    <p>{{student.last_name}}</p>
+    <p>{{student.age}}</p>
 </body>
 </html>
