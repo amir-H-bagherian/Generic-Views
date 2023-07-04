@@ -19,7 +19,9 @@ class HomeView(ListView):
     
 class DetailStudentView(DetailView):
     template_name = 'home/detail.html'
-    model = Student
     context_object_name = 'student'
     slug_field = 'first_name'
     slug_url_kwarg = 'my_slug'
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return Student.objects.filter(age__gt=30)
