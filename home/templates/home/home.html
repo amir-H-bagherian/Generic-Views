@@ -6,6 +6,12 @@
     <title>Document</title>
 </head>
 <body>
+    {% if not user.is_authenticated %}
+        <button><a href="{% url 'login' %}">Login</a></button>
+    {% else %}
+        Welcome {{user.username}}
+    {% endif %}
+    <br>
     {% for st in student %}
     <a href="{{ st.get_absolute_url }}">{{st}}</a>
     {% endfor %}

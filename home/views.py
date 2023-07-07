@@ -9,6 +9,7 @@ from django.views.generic import DetailView, FormView, CreateView, UpdateView
 from .models import Student, Comment
 from .forms import ContactForm
 from django.urls import reverse_lazy
+from django.contrib.auth.views import LoginView, LogoutView
 
 class HomeView(ListView):
     template_name = 'home/home.html'
@@ -54,3 +55,7 @@ class DeleteStudentView(DeleteView):
     model = Student
     success_url = reverse_lazy('home')
     template_name = 'home/delete.html'
+    
+class StudentLoginView(LoginView):
+    template_name = 'home/login.html'
+    next_page = reverse_lazy('home')
