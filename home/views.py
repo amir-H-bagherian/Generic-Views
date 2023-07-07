@@ -59,3 +59,7 @@ class DeleteStudentView(DeleteView):
 class StudentLoginView(LoginView):
     template_name = 'home/login.html'
     next_page = reverse_lazy('home')
+    
+    
+class StudentLogoutView(LogoutView):
+    next_page = reverse_lazy('home')
